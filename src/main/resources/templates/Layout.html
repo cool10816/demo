@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1" />
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-select/1.13.18/css/bootstrap-select.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.2.0/css/all.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<th:block th:replace="Header :: header-nav" />
+	<th:block layout:fragment="content" />
+	<th:block th:replace="Footer :: footer" />
+	<!-- jQuery -->
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap-select/1.13.18/js/bootstrap-select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js}"></script>
+	<th:block layout:fragment="javascript" />
+</body>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{Layout}">
+
+<head>
+	<title>Menu</title>
+</head>
+
+<body>
+	<div layout:fragment="content" th:remove="tag">
+		<div style="padding-left: 100px !important; padding-right: 100px; padding-top: 80px">
+		<section class="py-5">
+			<form name="form1" id="form1" th:action="@{/Product/getMenu}" th:object="${productCategory}" method="post" role="form">
+				<!--<input type="hidden" id="page" name="page" th:value="${page}">-->
+				<div class="form-group row">
+					<div class="input-group col-md-2">
+						<div class="input-group-prepend">
+							<labe th:for="type">種類</label>
+						</div  >
+						<input type="text" class="form-control" id="type" th:field=*{type}> 
+					</div >
+					<div class="input-group col-md-3">
+						<button type="button" class="btn btn-info" id="btnQuery" name="btnQuery" th:onclick="|form.action = '@{/Product/getMenu}'|">查詢</button>
+					</div >
+				</div >
+			</form>
+			<div class="container-fluid">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>產品分類</th>
+							</tr>
+						</thead>
+						<tbody th:remove="all-but-first">
+							<tr th:each="product : ${productCategories}">
+								<td data-th="名稱" th:text="${product.name}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		</div>
+	</div>
+	<div layout:fragment="javascript" th:remove="tag">
+		<script type="text/javascript" th:src="@{/js/menu.js}"></script >
+	</div>
+</body>
+
+</html>
