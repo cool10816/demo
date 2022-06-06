@@ -1,5 +1,19 @@
 package com.example.demo.config;
 
-public class RedisConfiguration {
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
+import lombok.Data;
+
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "redis.lettuce")
+public class RedisConfiguration {
+	private String nodes;
+	private String username;
+	private String password;
+	private String keyPrefix;
+
+	private long opeartionTimeout_ms;
+	private long keyExpiration_s;
 }
