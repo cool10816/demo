@@ -14,6 +14,6 @@ public class RedisConfiguration {
 	private String password;
 	private String keyPrefix;
 
-	private long opeartionTimeout_ms;
-	private long keyExpiration_s;
+	private long opeartiontimeoutms;
+	private long keyexpirationms;
 }

@@ -40,26 +40,26 @@ public class RedisLettuceConnector {
 //		return redisAdvancedClusterCommands;
 //	}
 
-	@Bean
-	public RedisCommands<String, String> inital() {
-		if (null == redisCommands) {
-			StringBuilder uri = new StringBuilder(REDIS_URI_PREFIX)
-					.append(this.redisConfiguration.getUsername())
-					.append(AUTHENTICA_INFORMATION_SEPARATOR)
-					.append(this.redisConfiguration.getPassword())
-					.append(REDIS_URI_SEPARATOR)
-					.append(this.redisConfiguration.getNodes());
-
-			RedisClient redisClient = RedisClient.create(uri.toString());
-			StatefulRedisConnection<String, String> connection = redisClient.connect();
-			this.redisCommands = connection.sync();
-			this.redisCommands.setTimeout(Duration.ofMillis(this.redisConfiguration.getOpeartionTimeout_ms()));
-			
-			this.strRedisKeyPrefix = new StringBuilder(this.redisConfiguration.getKeyPrefix())
-					.append(AUTHENTICA_INFORMATION_SEPARATOR).toString();
-		}
-		return redisCommands;
-	}
+//	@Bean
+//	public RedisCommands<String, String> inital() {
+//		if (null == redisCommands) {
+//			StringBuilder uri = new StringBuilder(REDIS_URI_PREFIX)
+//					.append(this.redisConfiguration.getUsername())
+//					.append(AUTHENTICA_INFORMATION_SEPARATOR)
+//					.append(this.redisConfiguration.getPassword())
+//					.append(REDIS_URI_SEPARATOR)
+//					.append(this.redisConfiguration.getNodes());
+//
+//			RedisClient redisClient = RedisClient.create(uri.toString());
+//			StatefulRedisConnection<String, String> connection = redisClient.connect();
+//			this.redisCommands = connection.sync();
+//			this.redisCommands.setTimeout(Duration.ofMillis(this.redisConfiguration.getOpeartionTimeout_ms()));
+//			
+//			this.strRedisKeyPrefix = new StringBuilder(this.redisConfiguration.getKeyPrefix())
+//					.append(AUTHENTICA_INFORMATION_SEPARATOR).toString();
+//		}
+//		return redisCommands;
+//	}
 
 	public long removeValue(String strKey) {
 		try {
@@ -101,7 +101,7 @@ public class RedisLettuceConnector {
 
 		try {
 			this.redisCommands.set(strOperatingKey, strValue);
-			return this.redisCommands.expire(strOperatingKey, this.redisConfiguration.getKeyExpiration_s());
+			return this.redisCommands.expire(strOperatingKey, this.redisConfiguration.getKeyexpirationms());
 		} catch (Exception e) {
 			this.recordRedisOperationError("SET & EXPIRE", e);
 			return false;
