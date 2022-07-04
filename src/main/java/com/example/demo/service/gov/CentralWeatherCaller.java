@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.config.weather.WeatherConfiguration;
 import com.example.demo.model.gov.CentralWeatherRequestEntity;
+import com.example.demo.model.gov.CentralWeatherResponseEntity;
 import com.example.demo.util.ExceptionStackIllustrtor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,7 +27,7 @@ public class CentralWeatherCaller {
 	@Autowired
 	private WeatherConfiguration weatherConfiguration;
 
-	public void callCentralWeatherService(CentralWeatherRequestEntity reqEntity) {
+	public CentralWeatherResponseEntity callCentralWeatherService(CentralWeatherRequestEntity reqEntity) {
 		synchronized (this) {
 			if (null == this.httpClent) {
 				this.httpClent = new OkHttpClient.Builder().callTimeout(5000, TimeUnit.MILLISECONDS)
@@ -39,7 +40,7 @@ public class CentralWeatherCaller {
 		try {
 //			RequestBody body = RequestBody.create(MediaType.parse("application/json"), objectMapper.writeValueAsBytes(reqEntity));
 
-			Request req = new Request.Builder().url("https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-F17DD75A-4167-4A04-A461-5A97AD5D3F1C&limit=10&offset=0&format=JSON&locationName=宜蘭縣&elementName=")
+			Request req = new Request.Builder().url("https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?locationName=宜蘭縣,花蓮縣")
 					.addHeader(weatherConfiguration.getAuthorizationKey(), weatherConfiguration.getAuthorizationValue())
 					.method("GET", null)
 					.build();
@@ -47,13 +48,16 @@ public class CentralWeatherCaller {
 			rsp = httpClent.newCall(req).execute();
 
 			if (rsp.isSuccessful()) {
-				log.info(rsp.body().string());
+				String value = rsp.body().string();
+				return objectMapper.readValue(value, CentralWeatherResponseEntity.class);
 			}
 			log.error("<<< {} >>> Unable to retrieve Central Weather Service for parameters [{}]: {}.",
 					this.getClass().getSimpleName());
+			return null;
 
 		} catch (Exception e) {
 			log.error("<<< {} >>> Unexpected exception occurred while retrieving Cental Weather Service for parameters [{}]: {}.", this.getClass().getSimpleName(), ExceptionStackIllustrtor.illusustrateExceptionStack(e));
+			return null;
 		} finally {
 			if (null != rsp) {
 				rsp.close();

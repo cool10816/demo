@@ -11,4 +11,5 @@ import lombok.Data;
 public class WeatherConfiguration {
 	private String authorizationKey;
 	private String authorizationValue;
+	private String url;
 }
